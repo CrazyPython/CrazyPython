@@ -1,0 +1,182 @@
+<h1>Dlang for JavaScript Developers - Functions and Control Flow</h1>
+
+<h2>Functions</h2>
+Dlang's function syntax has the return type in the place of the "function" keyword in JavaScript. Instead of typing the return type, you can the "auto" keyword for type inference.
+
+<pre>
+auto run() {
+    auto income = 100;
+    auto tax = calculate_tax(income);
+    println!("{}", tax);
+}
+
+int calculate_tax(int income) {
+    return income * 90 / 100;
+}
+
+</pre>
+
+The difference here is that the type comes before the name of the argument.
+
+<h2>Arrow Functions</h2>
+Arrow functions are a popular JavaScript feature.
+
+Dlang has lambdas and delegate literals, which are similar to arrow functions used in JavaScript.
+
+Without arguments:
+<pre>
+// JavaScript
+let greet = () => console.log("hello");
+
+greet(); // "hello"
+
+// Dlang
+auto greet = () => writeln("hello");
+
+greet();
+</pre>
+
+With arguments:
+<pre>
+// JavaScript
+let greet = (msg) => console.log(msg);
+
+geet("good morning!"); // "good morning!"
+
+// Dlang
+auto greet = (string msg) => writeln(msg);
+
+greet("good morning!"); // "good morning!"
+</pre>
+
+Returning values:
+<pre>
+// JavaScript
+auto add = (a, b) => a + b;
+
+add(1, 2); // 3
+
+// Dlang
+auto add = (int a, int b) => a + b;
+
+add(1, 2); // 3
+</pre>
+
+This uses delegate syntax to accomplish multiline:
+<pre>
+// JavaScript
+let add = (a, b) => {
+  let sum = a + b;
+  return sum;
+};
+
+add(1, 2); // 3
+
+// Dlang
+auto add = (int a, int b) {
+  auto sum = a + b;
+  return sum;
+};
+</pre>
+
+Closures don’t need the type annotations if the type annotation can be inferred by looking at the function call that receives the type annotation, but I’ve added them here for clarity.
+
+JavaScript has a stage 1 proposal for the pipeline operator. Dlang has a similar, more powerful syntax: the uniform function call syntax. (UFCS)
+<pre>
+// JavaScript (with transpiler)
+
+"hi" |> console.log; // "hi"
+
+// Dlang
+
+"hi".writeln;
+</pre>
+
+Furthermore, you can pass additional arguments after the pipeline operator:
+<pre>
+// JavaScript (with transpiler)
+
+"hi" |> (_ => console.log(_, "hello")); "hi hello"
+
+// Dlang
+
+"hi".writeln("hello");
+</pre>
+
+<h2>If Else</h2>
+<pre>
+auto run() {
+    auto income = 100;
+    auto tax = calculate_tax(income);
+    writeln(tax);
+}
+auto calculate_tax(int income) {
+    if (income < 10) {
+        return 0;
+    } else if (income >= 10 && income < 50) {
+        return 20;
+    } else {
+        return 50;
+    }
+}
+</pre>
+
+<h2>Loops</h2>
+
+While loops:
+<pre>
+auto run() {
+    auto count = 0;
+    while (count < 10) {
+        writeln(count);
+        count += 1;
+    }
+}
+</pre>
+
+Dlang offers foreach loops:
+<pre>
+auto run() {
+    auto count = 0;
+    auto numbers = [1, 2, 3, 4, 5];
+    foreach (n; numbers) {
+        writeln(n);
+        count += 1;
+    }
+}
+</pre>
+
+As well as traditional for loops:
+<pre>
+auto run() {
+    auto count = 0;
+    auto numbers = [1, 2, 3, 4, 5];
+    for (auto i = 0; i < numbers.length; ++i) {
+        writeln(numbers[i]);
+        count += 1;
+    }
+}
+</pre>
+
+We can also foreach-loop over ranges:
+<pre>
+auto run() {
+    auto count = 0;
+    foreach (n; 1..5) {
+        writeln(n);
+        count += 1;
+    }
+}
+</pre>
+
+<h2>Ranges</h2>
+
+<i>TODO</i>
+
+<hr/>
+
+I saw <a href="http://www.sheshbabu.com/posts/rust-for-javascript-developers-functions-and-control-flow/">Rust for JavaScript Developers - Functions and Control Flow</a> and just had to write this post for Dlang.
+
+
+Shoot me an email if you want me to finish this or write the next part on how Dlang's const and immutable work and emulating proxies in Dlang.
+
